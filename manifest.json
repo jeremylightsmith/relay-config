@@ -1,0 +1,130 @@
+{
+  "executor": {
+    "version": 24
+  },
+  "items": [
+    {
+      "src": "relay.md",
+      "dest": "relay.md",
+      "title": "relay.md \u2014 agent guide",
+      "description": "How your agent drives Relay from Claude Code (the mix relay CLI + REST API).",
+      "required": true
+    },
+    {
+      "src": "starters/CLAUDE.md",
+      "dest": "CLAUDE.md",
+      "title": "CLAUDE.md include",
+      "description": "Wires @relay.md in so Claude Code reads the Relay agent guide.",
+      "required": true,
+      "kind": "starter"
+    },
+    {
+      "src": "starters/AGENTS.md",
+      "dest": "AGENTS.md",
+      "title": "AGENTS.md include",
+      "description": "Wires @relay.md in so every agent reads the Relay agent guide.",
+      "required": true,
+      "kind": "starter"
+    },
+    {
+      "src": ".relay/executor.json",
+      "dest": ".relay/executor.json",
+      "title": "executor config",
+      "description": "How many jobs this machine runs at once and in which isolation class (capacity is the field you tune).",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/acceptance-tester.md",
+      "dest": ".claude/agents/acceptance-tester.md",
+      "title": "acceptance-tester agent",
+      "description": "Run the card's human-authored acceptance criteria against the branch and return a per-criterion verdict. Used by the Code flow's `acceptance` node after smoke passes; the card ref arrives in the message. Returns pass/fail/blocked plus a per-criterion checklist.",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/final-fixer.md",
+      "dest": ".claude/agents/final-fixer.md",
+      "title": "final-fixer agent",
+      "description": "Fix all blocking findings from the whole-branch review in one consolidated pass, keeping the suite green. Used by the Code flow's `final_fix` node; the findings arrive in the message.",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/final-reviewer.md",
+      "dest": ".claude/agents/final-reviewer.md",
+      "title": "final-reviewer agent",
+      "description": "Whole-branch cross-cutting review after all plan tasks are done and precommit passes \u2014 catches issues per-task reviews miss. Used by the Code flow's `final_review` node. Returns a pass/findings verdict.",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/plan-implementer.md",
+      "dest": ".claude/agents/plan-implementer.md",
+      "title": "plan-implementer agent",
+      "description": "Implement ONE task from the plan at $RELAY_PLAN using strict TDD. Used by the Code flow's `implement` node (a `foreach` loop, one iteration per task); the specific task (and any reviewer findings to address) arrive in the message.",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/quality-reviewer.md",
+      "dest": ".claude/agents/quality-reviewer.md",
+      "title": "quality-reviewer agent",
+      "description": "Stage 2 review \u2014 judge whether a spec-passing plan task change is well-built (clean, conventional, meaningful tests). Used by the Code flow's `quality_review` node; the task is named in the message. Returns a pass/findings verdict.",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/rebaser.md",
+      "dest": ".claude/agents/rebaser.md",
+      "title": "rebaser agent",
+      "description": "Rebase the current feature branch onto origin/main and resolve conflicts preserving both intents, leaving the branch green (mix precommit) \u2014 or abort cleanly and escalate. The Code flow's `sync_fix` / `resync_fix` nodes name it (RLY-192); also invocable by hand for a conflict-safe rebase.",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/smoke-tester.md",
+      "dest": ".claude/agents/smoke-tester.md",
+      "title": "smoke-tester agent",
+      "description": "Final gate \u2014 prove the branch's new functionality actually works by driving it end-to-end through the running app, and (for UI) screenshot each new/changed state and compare it to the matching docs/designs artboard. Used by the Code flow's `smoke` node after precommit + whole-branch review pass. Returns a pass/broken/blocked verdict with screenshot paths.",
+      "required": true
+    },
+    {
+      "src": ".claude/agents/spec-reviewer.md",
+      "dest": ".claude/agents/spec-reviewer.md",
+      "title": "spec-reviewer agent",
+      "description": "Stage 1 review \u2014 verify a just-implemented plan task matches its spec in the plan (at $RELAY_PLAN) (nothing missing, nothing extra). Used by the Code flow's `spec_review` node; the task under review is named in the message. Returns a pass/findings verdict.",
+      "required": true
+    },
+    {
+      "src": ".claude/commands/write-plan.md",
+      "dest": ".claude/commands/write-plan.md",
+      "title": "/write-plan command",
+      "description": "The write-plan slash command.",
+      "required": true
+    },
+    {
+      "src": ".claude/skills/brainstorm/SKILL.md",
+      "dest": ".claude/skills/brainstorm/SKILL.md",
+      "title": "brainstorm skill",
+      "description": "Use BEFORE any feature, component, UI, or behavior work, and before entering plan mode \u2014 for every project however small, when no approved design exists yet. Also invocable as /brainstorm."
+    },
+    {
+      "src": ".claude/skills/receiving-code-review/SKILL.md",
+      "dest": ".claude/skills/receiving-code-review/SKILL.md",
+      "title": "receiving-code-review skill",
+      "description": "Use when receiving code review feedback, before implementing any of it \u2014 especially if feedback seems unclear, technically questionable, or conflicts with a prior decision."
+    },
+    {
+      "src": ".claude/skills/systematic-debugging/SKILL.md",
+      "dest": ".claude/skills/systematic-debugging/SKILL.md",
+      "title": "systematic-debugging skill",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes."
+    },
+    {
+      "src": ".claude/skills/test-driven-development/SKILL.md",
+      "dest": ".claude/skills/test-driven-development/SKILL.md",
+      "title": "test-driven-development skill",
+      "description": "Use when implementing any feature, bugfix, refactor, or behavior change, before writing implementation code."
+    },
+    {
+      "src": ".claude/skills/verification-before-completion/SKILL.md",
+      "dest": ".claude/skills/verification-before-completion/SKILL.md",
+      "title": "verification-before-completion skill",
+      "description": "Use when about to claim work is complete, fixed, or passing, or to express satisfaction, or before committing/pushing/opening a PR or moving to the next task."
+    }
+  ]
+}
